@@ -1,0 +1,24 @@
+<p-messages [(value)]="messages"></p-messages>
+
+<p-progressSpinner *ngIf="inProgress"></p-progressSpinner>
+
+<p-card>
+  WARNING: Do not use very large time frames for history calls.
+</p-card>
+
+<p-card>
+  <label>Start Date: </label>
+  <p-calendar [(ngModel)]="startDate" showTime="true" hourFormat="12"></p-calendar>
+  <br />
+  <label>End Date: </label>
+  <p-calendar [(ngModel)]="endDate" showTime="true" hourFormat="12"></p-calendar>
+  <br />
+  <label>Point Tag: </label>
+  <input [(ngModel)]="pointTag" placeholder="Site.Service::Point.UDC" pInputText type="text">
+  <br />
+  <button (click)="getHistory(chart)">Get History</button>
+</p-card>
+
+<p-card>
+  <p-chart #chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+</p-card>

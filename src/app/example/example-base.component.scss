@@ -1,0 +1,26 @@
+.vertical-card {
+  display: inline-block;
+  width: 25%;
+  height: 100%;
+}
+
+.vertical-pane {
+  display: inline-block;
+  height: 100%;
+}
+
+.vertical-pane-small {
+  width: 280px;
+  vertical-align: top;
+}
+
+.vertical-pane-large {
+  width: 75%;
+  vertical-align: top;
+}
+
+.ui-progress-spinner {
+  position: fixed; /* or absolute */
+  top: 50%;
+  left: 50%;
+}

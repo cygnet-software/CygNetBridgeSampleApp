@@ -1,0 +1,32 @@
+<p-messages [(value)]="messages"></p-messages>
+
+<p-card>
+  <label>Rollup type: </label>
+  <p-dropdown [options]="intervals" [(ngModel)]="selectedInterval"></p-dropdown>
+  <br />
+  <label *ngIf="isDaySelected()">Day start hour: </label>
+  <input *ngIf="isDaySelected()" [(ngModel)]="dayStartHour" pInputText>
+  <label *ngIf="isMinuteSelected()">Minute rollup interval: </label>
+  <p-dropdown *ngIf="isMinuteSelected()" [options]="minuteIntervals" [(ngModel)]="minuteRollupInterval"></p-dropdown>
+  <label *ngIf="isHourSelected()">Hour rollup interval: </label>
+  <p-dropdown *ngIf="isHourSelected()" [options]="hourIntervals" [(ngModel)]="hourRollupInterval"></p-dropdown>
+  <br />
+  <label>Rollup type: </label>
+  <p-dropdown [options]="rollupTypes" [(ngModel)]="rollupType"></p-dropdown>
+  <br />
+
+  <label>Start Date: </label>
+  <p-calendar [(ngModel)]="startDate" showTime="true" hourFormat="12"></p-calendar>
+  <br />
+  <label>End Date: </label>
+  <p-calendar [(ngModel)]="endDate" showTime="true" hourFormat="12"></p-calendar>
+  <br />
+  <label>Point Tag: </label>
+  <input [(ngModel)]="pointTag" placeholder="Site.Service::Point.UDC" pInputText type="text">
+  <br />
+  <button (click)="getHistory(chart)">Get History Rollup</button>
+</p-card>
+
+<p-card>
+  <p-chart #chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+</p-card>

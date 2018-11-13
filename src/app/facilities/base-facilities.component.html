@@ -1,0 +1,34 @@
+<div>
+  <p-messages [(value)]="messages"></p-messages>
+
+  <p-card>
+    Facility tag format: Site.Service::Facility
+  </p-card>
+
+  <br />
+
+  <p-card>
+    <div>
+      <label>Facility Tag: </label>
+      <input #facilityTag>
+      <br />
+      <button (click)="getFacility(facilityTag.value)">Get facility</button>
+    </div>
+  </p-card>
+  <p-card>
+    <p-progressBar [value]="clockValue" [showValue]="false"></p-progressBar>
+  </p-card>
+
+  <p-card *ngIf="isPopulated">
+    <p-card title="{{facility.facility.description}}">
+      Type: {{facility.facility.type}}
+      <br />
+      Description: {{facility.facility.description}}
+      <br />
+      Category: {{facility.facility.category}}
+      <br />
+      SecurityApp: {{facility.facility.securityApp}}
+    </p-card>
+  </p-card>
+
+</div>

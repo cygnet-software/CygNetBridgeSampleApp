@@ -1,0 +1,15 @@
+<div>
+  <p-card>
+    <input #siteService placeholder="SITE.GRP" class="input-box">
+    <button (click)="loadRootGroups(siteService.value)" class="input-button">Get Group Roots</button>
+    <p-tree [value]="lazyGroups"
+            (onNodeExpand)="groupNodeExpand($event)"
+            (onNodeSelect)="groupNodeSelected($event)"
+            selectionMode="single"
+            [(selection)]="selectedGroupTreeNode"
+            [style]="{'overflow':'auto'}"
+            *ngIf="groupEntered"
+            class="group-tree">
+    </p-tree>
+  </p-card>
+</div>

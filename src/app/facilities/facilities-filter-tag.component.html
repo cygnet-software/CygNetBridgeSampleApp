@@ -1,0 +1,80 @@
+<div>
+  <p-messages [(value)]="messages"></p-messages>
+  <p-card>
+    Directions:
+    <br />
+    1. Fill in filter criteria.
+    <br />
+    2. Click Add Criteria
+    <br />
+    <br />
+    If you want multiple criteria follow steps 1-2 until you have them all.  Then select your logical operator. The criteria section will show you all the criteria you have added.
+    <br />
+    <br />
+    3. Click Get Tags
+    <br />
+  </p-card>
+  <br />
+  <p-card>
+    <label>Site Service  </label>
+    <input type="text" pInputText [(ngModel)]="siteService" placeholder="Site.Service" />
+
+    <br />
+    <br />
+    <label>Property Id  </label>
+    <input #propertyId placeholder="e.g. FacilityType" />
+    <br />
+    <label>Value  </label>
+    <input #propertyValue placeholder="e.g. WELL" />
+    <br />
+    <label>Comaprison Operator  </label>
+    <p-dropdown [options]="comparisonOperators" [(ngModel)]="comparisonOperator"></p-dropdown>
+    <br />
+    <label>Comparison Method  </label>
+    <p-dropdown [options]="comparisonMethods" [(ngModel)]="comparisonMethod"></p-dropdown>
+    <br />
+    <br />
+
+    <button (click)="addCriteria(propertyId.value, propertyValue.value, comparisonOperator, comparisonMethod)">Add Criteria</button>
+    <button (click)="clearCriteria()">Clear Criteria</button>
+    <br />
+
+    <br />
+    <label>Logical Operator  </label>
+    <p-dropdown [options]="logicalOperators" [(ngModel)]="logicalOperator"></p-dropdown>
+
+    <br />
+    <br />
+    <button (click)="getTags()">Get Tags</button>
+  </p-card>
+
+  <div *ngFor="let criteria of filters">
+    <p-card>
+      <label>Criteria</label>
+      <br />
+      Property Id: {{criteria.PropertyId}}
+      <br />
+      Value: {{criteria.Value}}
+      <br />
+      Comparison Operator: {{criteria.ComparisonOperator}}
+      <br />
+      Comparison Method: {{criteria.ComparisonMethod}}
+      <br />
+    </p-card>
+  </div>
+
+  <p-card>
+    <p-table [value]="response.tags">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Tags</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-tag>
+        <tr>
+          <td>{{tag}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+</div>

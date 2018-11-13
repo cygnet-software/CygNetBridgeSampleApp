@@ -1,0 +1,13 @@
+<p-messages [(value)]="messages"></p-messages>
+
+<p-progressSpinner *ngIf="busy"></p-progressSpinner>
+
+<div>
+  <div class="vertical-pane vertical-pane-small">
+    <group-pane (selectedFacility)="facilitySelected($event)" (busy)="setBusy($event)"></group-pane>
+  </div>
+  <div class="vertical-pane vertical-pane-large">
+    <point-pane [facilityTag]="selectedFacility" (selectedPointEvent)="pointSelected($event)" (busy)="setBusy($event)"></point-pane>
+    <history-pane [pointTag]="selectedPoint" (busy)="setBusy($event)"></history-pane>
+  </div>
+</div>

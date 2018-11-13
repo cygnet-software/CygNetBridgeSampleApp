@@ -1,0 +1,17 @@
+<div id="nav">
+  <div>
+    <p-sidebar [(visible)]="display">
+      <button id="login-button" (click)="login()" pButton label="Login"></button>
+      <p-checkbox [(ngModel)]="isLoggedIn" binary="true" ></p-checkbox>
+      <br />
+      <input #domainInput required />
+      <button id="domain-button" (click)="setDomain(domainInput.value)" pButton label="Set domain"></button>
+      <div *ngIf="isDomainSet">
+        Domain: {{domain}}
+      </div>
+      <p-menu [model]="menuItems" (click)="display = false"></p-menu>
+    </p-sidebar>
+  </div>
+
+  <button id="display-button" (click)="display = true" pButton icon="pi pi-bars"></button>
+</div>

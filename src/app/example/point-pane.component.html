@@ -1,0 +1,23 @@
+<p-card *ngIf="started">
+  <p-table [value]="realtimeResponse.currentValues"
+           selectionMode="single"
+           [(selection)]="selectedPoint"
+           (onRowSelect)="pointSelected($event)">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Point Tag</th>
+        <th>Value</th>
+        <th>Alternate Value</th>
+        <th>Timestamp</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pair>
+      <tr [pSelectableRow]="pair">
+        <td>{{pair.pointTag}}</td>
+        <td>{{pair.record.value}}</td>
+        <td>{{pair.record.alternateValue}}</td>
+        <td>{{pair.record.timestamp}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

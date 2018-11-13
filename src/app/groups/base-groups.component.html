@@ -1,0 +1,19 @@
+<div>
+  <p-messages [(value)]="messages"></p-messages>
+  <p-card>
+    <label>Group Service: </label>
+    <input #siteService placeholder="SITE.GRP">
+    <br/>
+    <button (click)="loadRootGroups(siteService.value)">Get Root Groups</button>
+  </p-card>
+
+  <p-tree [value]="lazyGroups"
+          (onNodeExpand)="groupNodeExpand($event)"
+          (onNodeSelect)="groupNodeSelected($event)"
+          selectionMode="single"
+          [(selection)]="selectedGroupTreeNode"
+          [style]="{'overflow':'auto'}"
+          layout="horizontal"
+          *ngIf="groupEntered">
+  </p-tree>
+</div>

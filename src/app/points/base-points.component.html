@@ -1,0 +1,22 @@
+<div>
+  <p-messages [(value)]="messages"></p-messages>
+
+
+  <p-card>
+    <label>Point Tag: </label>
+    <input #pointTag />
+    <br/>
+    <button (click)="getPointConfig(pointTag.value)">Get Point Config</button>
+  </p-card>
+
+  <p-card>
+    Is Active: {{pointConfigRecord.isActive}}
+    <br />
+    Point Version: {{pointConfigRecord.pointVersion}}
+    <br/>
+    Description: {{pointConfigRecord.description}}
+    <br/>
+    Long Description: {{pointConfigRecord.longDescription}}
+  </p-card>
+
+</div>

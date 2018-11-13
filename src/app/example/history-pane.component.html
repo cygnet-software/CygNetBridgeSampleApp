@@ -1,0 +1,14 @@
+
+<p-card *ngIf="started">
+  <label>Start Date: </label>
+  <p-calendar [(ngModel)]="startDate" showTime="true" hourFormat="12"></p-calendar>
+  <br />
+  <label>End Date: </label>
+  <p-calendar [(ngModel)]="endDate" showTime="true" hourFormat="12"></p-calendar>
+  <br />
+  <button (click)="getHistory(chart)">Get History</button>
+</p-card>
+
+<p-card *ngIf="displayChart">
+  <p-chart #chart type="line" [data]="chartData" [options]="chartOptions"></p-chart>
+</p-card>

@@ -1,0 +1,29 @@
+<p-messages [(value)]="messages"></p-messages>
+
+<p-card>
+  <label>Point Tag: </label>
+  <input [(ngModel)]="pointTag" placeholder="Site.Service::Point.UDC" pInputText type="text"/>
+  <button (click)="addPointTag()" >Add Point</button>
+  <br/>
+  <br/>
+  <button (click)="getValues()">Get Values For Points</button>
+</p-card>
+
+<p-card>
+  <p-table [value]="response.currentValues">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Point Tag</th>
+        <th>Value</th>
+        <th>Alternate Value</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pair>
+      <tr>
+        <td>{{pair.pointTag}}</td>
+        <td>{{pair.record.value}}</td>
+        <td>{{pair.record.alternateValue}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

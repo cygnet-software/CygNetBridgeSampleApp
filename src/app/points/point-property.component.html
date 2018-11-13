@@ -1,0 +1,73 @@
+<p-messages [(value)]="messages"></p-messages>
+
+<p-progressSpinner *ngIf="inProgress"></p-progressSpinner>
+
+<p-card>
+  <p-card class="vertical-card">
+    <label>Property Id  </label>
+    <input #propertyId placeholder="e.g. FacilityType" />
+    <button (click)="addProperty(propertyId.value)">Add Property</button>
+
+    <br/>
+    <br/>
+
+    <p-table [value]="pointPropertyRequest.properties">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Property</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-property>
+        <tr>
+          <td>{{property}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <p-card class="vertical-card">
+    <label>Point Tag  </label>
+    <input #pointTag placeholder="e.g. BRIDGECP.UIS::ASH_GM.ANBTUXIN" />
+    <button (click)="addPointTag(pointTag.value)">Add Point Tag</button>
+
+    <br />
+    <br />
+
+    <p-table [value]="pointPropertyRequest.pointTags">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Point Tag</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-pointTag>
+        <tr>
+          <td>{{pointTag}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </p-card>
+
+  <p-card>
+    <button (click)="getProperties()">Get Properties</button>
+    <br/>
+    <br/>
+    <p-card *ngFor="let record of pointPropertyResponse.results">
+      <label>{{record.pointTag}}</label>
+      <p-table [value]="record.properties">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Property</th>
+            <th>Value</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-valuePair>
+          <tr>
+            <td>{{valuePair.property}}</td>
+            <td>{{valuePair.value}}</td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </p-card>
+  </p-card>
+</p-card>

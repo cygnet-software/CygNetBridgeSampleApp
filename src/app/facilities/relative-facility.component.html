@@ -1,0 +1,30 @@
+<p-messages [(value)]="messages"></p-messages>
+
+<p-card>
+  <label>Facility Tag: </label>
+  <input [(ngModel)]="facilityTag" placeholder="Site.Service::Facility" pInputText type="text" />
+  <br />
+  <label>Relationship: </label>
+  <input [(ngModel)]="relationship" placeholder="" pInputText type="text" />
+  <button (click)="addRelationship()">Add Relationship</button>
+  <br />
+  <br />
+  <button (click)="getRelationships()">Get Relative Facilities</button>
+</p-card>
+
+<p-card>
+  <p-table [value]="relationshipPairs">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Relationship</th>
+        <th>Relative</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pair>
+      <tr>
+        <td>{{pair.relationship}}</td>
+        <td>{{pair.relative}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
