@@ -1,14 +1,19 @@
 # Sample
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.0.8.
+The CygNet Bridge API comes with a sample web application providing source code that demonstrates using the API to retrieve data from your CygNet system. The sample application source code is located in the Bridge delivery in the folder BridgeAPISampleApp/sample. The source code is for an Angular web application and needs to be compiled first in order to run it in a web browser.  
+ 
+## Angular
 
-## Development server
+ To build the application you will need to install the Angular CLI which is a tool for creating, developing, and maintaining Angular applications.  
+Instructions for installing angular can be found at https://angular.io/ 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Installation
 
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Open a Windows command prompt to the “sample” folder, and type the command: 
+“npm install” - This will download and install all of the required dependencies. 
+Next enter the command: 
+“npm start” – This will compile the application and start a test development server on port 4200. 
+To test the application, open a web browser to the address: http://localhost:4200 
 
 ## Build
 
