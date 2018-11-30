@@ -30,7 +30,6 @@ import { HomeComponent } from './home/home.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BaseServiceComponent } from './services/base-service.component';
 import { BaseFacilitiesComponent } from './facilities/base-facilities.component';
-import { BasePointsComponent } from './points/base-points.component';
 import { BaseGroupsComponent } from './groups/base-groups.component';
 import { FacilitiesFilterTagComponent } from './facilities/facilities-filter-tag.component';
 import { HistoryComponent } from './points/history.component';
@@ -51,7 +50,6 @@ import { HistoryRollupComponent } from './points/history-rollup.component';
     NavMenuComponent,
     BaseServiceComponent,
     BaseFacilitiesComponent,
-    BasePointsComponent,
     BaseGroupsComponent,
     FacilitiesFilterTagComponent,
     HistoryComponent,
@@ -92,7 +90,6 @@ import { HistoryRollupComponent } from './points/history-rollup.component';
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'services', component: BaseServiceComponent, pathMatch: 'full' },
       { path: 'facilities', component: BaseFacilitiesComponent, pathMatch: 'full' },
-      { path: 'points', component: BasePointsComponent, pathMatch: 'full' },
       { path: 'groups', component: BaseGroupsComponent, pathMatch: 'full' },
       { path: 'facilities/filter', component: FacilitiesFilterTagComponent, pathMatch: 'full' },
       { path: 'points/history', component: HistoryComponent, pathMatch: 'full' },

@@ -29,7 +29,6 @@ export class NavMenuComponent implements OnInit {
       { label: 'Facilities', routerLink: "facilities", routerLinkActiveOptions: { exact: true }},
       { label: 'Facilities by Tag Filter', routerLink: "facilities/filter", routerLinkActiveOptions: { exact: true }},
       { label: 'Relative Facilities', routerLink: "facilities/relative", routerLinkActiveOptions: { exact: true }},
-      { label: 'Points', routerLink: "points", routerLinkActiveOptions: { exact: true }},
       { label: 'History', routerLink: "points/history", routerLinkActiveOptions: { exact: true }},
       { label: 'History Rollup', routerLink: "points/history/rollup", routerLinkActiveOptions: { exact: true } },
       { label: 'Realtime', routerLink: "points/realtime", routerLinkActiveOptions: { exact: true }},

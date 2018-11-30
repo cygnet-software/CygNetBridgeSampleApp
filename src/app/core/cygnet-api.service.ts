@@ -1,9 +1,7 @@
 import { Injectable, Inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
-import { FacilityRecord } from '../models/facility-record';
-import { PointConfigRecord } from '../models/point-config-record';
-import { PointValueRecord } from '../models/point-value-record';
+import { PointValueResponse } from '../models/point-value-response';
 import { GroupResponse } from '../models/group-response';
 import { FacilityResponse } from '../models/facility-response';
 import { FacilityFilterTagRequest } from '../models/facility-filter-tag-request';
@@ -27,9 +25,12 @@ import { HistoryRollupResponse } from '../models/history-rollup-response';
   providedIn: 'root'
 })
 export class CygNetApiService {
+  // Baseurl is the start of the url for your webserver.  This only needs to be settable if you're using your app to
+  // be able to hit a variety of web servers.  Otherwise this is easily hardcoded. 
   private baseUrl: string = "http://localhost";
 
   private authToken: string;
+  // Like Baseurl this can be hardcoded if you're only using a singleton.  
   private domain: number = null;
 
   constructor(private http: HttpClient)
@@ -53,10 +54,12 @@ export class CygNetApiService {
     return this.authToken.length != 0;
   }
 
+  // Auth tokens need to be retrieved prior to making a get/post call as it's required for the headers.
   public async Login() {
     this.authToken = await this.getAuthenticationToken();
   }
 
+  // You only need to use this if you're using various bridge servers.
   public setBaseUrl(url: string) {
     this.baseUrl = url;
   }
@@ -82,12 +85,6 @@ export class CygNetApiService {
     return response;
   }
 
-  public async getPointConfigRecordByPointTag(pointTag: string) {
-    let pointConfigRecord: PointConfigRecord = await this.http.get<PointConfigRecord>(this.buildUrl(`api/v1/points/${pointTag}/configs/`),
-      { headers: this.makeHeaders() }).toPromise();
-    return pointConfigRecord;
-  }
-
   public async postGetPointTagsByFilter(pointTagRequest: PointTagFilterRequest) {
     let pointTagResponse: PointTagFilterResponse = await this.http.post<PointTagFilterResponse>(this.buildUrl(`api/v1/points/tags`),
       JSON.stringify(pointTagRequest),
@@ -97,7 +94,7 @@ export class CygNetApiService {
   }
 
   public async getCurrentValueByPointTag(pointTag: string) {
-    let realTimeEntry: PointValueRecord = await this.http.get<PointValueRecord>(this.buildUrl(`api/v1/points/values/${pointTag}`),
+    let realTimeEntry: PointValueResponse = await this.http.get<PointValueResponse>(this.buildUrl(`api/v1/points/values/${pointTag}`),
       { headers: this.makeHeaders() }).toPromise();
     return realTimeEntry;
   }

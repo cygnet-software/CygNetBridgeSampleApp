@@ -3,7 +3,6 @@ import { interval, Observable, Subscription, timer, Subject } from 'rxjs';
 import { startWith, switchMap } from "rxjs/operators";
 
 import { CygNetApiService } from '../core/cygnet-api.service';
-import { FacilityRecord } from '../models/facility-record';
 import { FacilityResponse } from '../models/facility-response';
 import { Message } from 'primeng/api';
 
