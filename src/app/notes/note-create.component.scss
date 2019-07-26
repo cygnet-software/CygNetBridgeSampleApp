@@ -1,0 +1,39 @@
+.createNoteCell{ 
+    padding: 0px 15px 5px 10px;
+    margin-top: 10px;
+}
+
+.createNoteTitle{
+    font-weight: bold;
+    margin: 0px 0px 5px 0px;
+}
+
+.create-note-input{
+    width: 70%; 
+    margin: 0 0 10px 10px;
+}
+
+.invalid-field{
+    border-color: red
+}
+.asterisk{
+    color: red
+}
+.ui-tabview-panel{
+    padding: 0px !important;
+}
+.ui-scrollpanel{
+    border: 0px;
+}
+
+.calendar{
+    margin-left: 10px;
+}
+
+.tab-pcard{
+   width: 95%;
+}
+
+.create-note-type-dropdown{
+    width: 160px !important
+}

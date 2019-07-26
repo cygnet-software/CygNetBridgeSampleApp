@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Message } from 'primeng/api';
 import { CygNetApiService } from '../core/cygnet-api.service';
 import { RealtimeRequest } from '../models/realtime-request';
@@ -11,7 +11,8 @@ import { forEach } from '@angular/router/src/utils/collection';
 @Component({
   selector: 'app-realtime-lightweight',
   templateUrl: './realtime-lightweight.component.html',
-  styleUrls: ['./realtime-lightweight.component.scss']
+  styleUrls: ['./realtime-lightweight.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RealtimeLightweightComponent implements OnInit {
   private points: string[];
@@ -30,7 +31,8 @@ export class RealtimeLightweightComponent implements OnInit {
   public clockValue: number;
   public showTimer: boolean = false;
 
-  public messages: Message[] = [];
+  public messages: Message[] = [];    
+  public loading: boolean = false;
 
   constructor(private cygNet: CygNetApiService) {
     this.gridValues = new Array<RealtimeValuePair>();
@@ -65,12 +67,12 @@ export class RealtimeLightweightComponent implements OnInit {
       return;
     }
 
+    this.loading = true;
     if (this.sub != null) {
       this.sub.unsubscribe();
     }
-
     this.showTimer = true;
-    this.response = await this.cygNet.postGetRealtimeValues(this.request);
+    this.response = await this.cygNet.getRealtimeValues(this.request);
     this.refreshGrid();
 
     this.lastRequest = new Date();
@@ -81,11 +83,13 @@ export class RealtimeLightweightComponent implements OnInit {
       this.response = res;
       this.refreshGrid();
     });
+    this.loading = false;
   }
 
   private getLightweightValues(): Promise<RealtimeResponse> {
     let newLastRequest = new Date();
-    let resp: Promise<RealtimeResponse> = this.cygNet.postGetRealtimeValuesLightweight(this.request, this.lastRequest);
+    this.request.UpdatedAfter = this.lastRequest.toISOString();
+    let resp: Promise<RealtimeResponse> = this.cygNet.getRealtimeValuesLightweight(this.request);
     this.lastRequest = newLastRequest;
     return resp;
   }

@@ -1,0 +1,67 @@
+<div>
+    <p-messages [(value)]="errorMessages"></p-messages>
+    <p-progressSpinner *ngIf="loading "></p-progressSpinner>
+    <p-growl [(value)]="growlMsgs" [sticky] = "false" [life] = "3000"></p-growl>
+    <p-card>
+        <label class="input-label" >UIS Service: </label>
+        <input  [(ngModel)]="uisSiteService"  pInputText type="text" placeholder="SITE.UIS"/>
+        <br />
+
+        <label class="input-label" >Device ID: </label>
+        <input  [(ngModel)]="deviceId"  pInputText type="text"/>
+        <br />
+        
+        <label class="input-label" >DataGroup Type: </label>
+        <input  [(ngModel)]="dataGroupType"  pInputText type="text"/>
+        <br />
+
+        <label class="input-label" >DataGroup Ordinal: </label>
+        <input  [(ngModel)]="dataGroupOrd"  pInputText type="text"/>
+        <br />
+
+        <label class="input-label" >From Device Parameters: </label>
+        <input  [(ngModel)]="fromDeviceParameters"  pInputText type="text"/>
+        <br />
+        
+        <label class="input-label" >To Device Parameters: </label>
+        <input  [(ngModel)]="toDeviceParameters"  pInputText type="text"/>
+        <br />
+        
+        <label class="input-label" >Max Wait time (ms): </label>
+        <input  [(ngModel)]="maxWaitInMs"  pInputText type="text"/>
+        <br />
+
+        <label class="input-label"> </label>
+        <p-card  [style]="{'width':'500px','margin':'10px 0 0 10px'}" title="Data Parameters:">
+            <input #parameter placeholder="parameter" pInputText type="text" (keyup.enter)="addParameter(parameter.value,valueField.value);parameter.value='';valueField.value=''"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input #valueField placeholder="value" pInputText type="text" (keyup.enter)="addParameter(parameter.value,valueField.value);parameter.value='';valueField.value=''"/>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            
+            <br/><br/>
+            <button class="btn btn-primary" (click)="addParameter(parameter.value,valueField.value);parameter.value='';valueField.value=''">Add Parameter</button>
+            &nbsp;&nbsp;
+            <button class="btn btn-primary" (click)="transactionData=[];">Clear</button>
+            <br/>
+            <table style="width:60%"  *ngIf="transactionData.length>0">
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th> 
+                    </tr>
+                    <tr *ngFor="let data of transactionData">
+                        <td>{{data.parameter}}</td>
+                        <td>{{data.value}}</td> 
+                    </tr>
+            </table>
+        </p-card>
+        <br />
+        <button class="btn btn-primary" style="margin-left: 10px" (click)="sendTransaction();">Send Transaction</button> &nbsp;&nbsp; &nbsp;&nbsp;
+        
+    </p-card>
+    <p-dialog [positionTop]="0" [header]="'Transaction Detail'" [(visible)]="showDetail" [width]="550" [minHeight]="500"  [modal]="true">
+            <transaction-detail [transaction]="transaction"></transaction-detail>
+            <p-footer>
+                <button pButton type="button" (click)="showDetail=false" label="Close" ></button>
+            </p-footer>
+    </p-dialog>
+</div>

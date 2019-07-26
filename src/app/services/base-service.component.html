@@ -1,4 +1,5 @@
 <p-messages [(value)]="messages"></p-messages>
+<p-progressSpinner *ngIf="loading"></p-progressSpinner>
 
 <p-card>
   <label>Domain ID: </label>
@@ -7,9 +8,8 @@
 
   <button (click)="getServices(domain.value)">Get services</button>
 </p-card>
-
-<p-card>
-  <p-table [value]="services">
+<p-card  *ngIf="isPopulated">
+  <p-table [value]="services" >
     <ng-template pTemplate="header">
       <tr>
         <th>SiteService</th>

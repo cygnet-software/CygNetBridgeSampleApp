@@ -1,0 +1,55 @@
+<div>
+  <p-messages [(value)]="errorMessages"></p-messages>
+  <p-messages [(value)]="successMessages"></p-messages>
+  <p-progressSpinner *ngIf="loading "></p-progressSpinner>
+  <p-card>
+    <div>
+      <label style="margin: 10px">Alarm Service: </label>
+      <input #alarmsService pInputText placeholder="SITE.CAS" [value]="siteService">
+      <br />
+      <button class="btn btn-primary" (click)="getAlarms(alarmsService.value)">Get Alarms</button>
+    </div>
+  </p-card>
+  
+  <p-card *ngIf="isPopulated">
+    <p-table [value]="alarms" [paginator]="true" [rows]="30" [(selection)]="selectedAlarms" dataKey="pointTag" 
+    (onRowSelect)="alarmSelected($event)" (onRowUnselect)="alarmUnselected($event)" [scrollable]="true" scrollHeight="350px">
+      <ng-template pTemplate="header">
+        <tr>
+            <th style="width: 3em">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+          <th style="width: 15%">Alarm Condition</th>
+          <th style="width: 42%">Point Tag</th>
+          <th style="width: 15%">Point Value</th>
+          <th style="width: 23%">Timestamp</th>
+          <th style="width: 10%">Acknowledge</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-alarm>
+        <tr [ngClass]="getAlarmClasses(alarm)">
+            <td style="width: 3em">
+                <p-tableCheckbox [value]="alarm" ></p-tableCheckbox>
+            </td>
+          <td style="width: 15%">{{alarm.alarmCondition}}</td>
+          <td style="width: 42%; word-wrap:break-word;">{{alarm.pointTag}}</td>
+          <td style="width: 15%">{{alarm.pointValue.value}}</td>
+          <td style="width: 23%">{{alarm.reportedTimestamp}}</td>
+          <td style="width: 10%">
+            <span *ngIf="alarm.isAcknowledged; else condition">Acknowledged</span>
+            <ng-template #condition><span> Pending</span></ng-template>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        Total {{alarms?.length}} Alarms
+    </ng-template>
+    </p-table>
+    <br/><br/>
+    <button  class="btn btn-primary" (click)="ackAlarms(selectedAlarms)" [disabled]="selectedAlarms.length<=0" >Acknowledge</button>
+    <span>&nbsp;</span>
+    <button  class="btn btn-primary" (click)="clearAlarms(selectedAlarms,false)" [disabled]="!(selectedAlarms.length>0 && canClearAlarm)" >Clear</button>
+    <span>&nbsp;</span>
+    <button class="btn btn-primary" (click)="clearAlarms(selectedAlarms,true)" [disabled]="!(selectedAlarms.length>0 && canClearAlarm) " >Force Clear</button>
+  </p-card>
+</div>

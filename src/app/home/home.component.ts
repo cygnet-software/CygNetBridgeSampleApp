@@ -8,7 +8,10 @@ import { CygNetApiService } from '../core/cygnet-api.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private cygNet: CygNetApiService) { }
+  constructor(private cygNet: CygNetApiService)
+  {
+    this.baseUrl = this.cygNet.getBaseUrl();
+  }
 
   public baseUrl: string = "http://localhost";
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Message } from 'primeng/api';
 import { CygNetApiService } from '../core/cygnet-api.service';
 import { RealtimeRequest } from '../models/realtime-request';
@@ -7,7 +7,8 @@ import { RealtimeResponse, RealtimeValuePair } from '../models/realtime-response
 @Component({
   selector: 'app-realtime',
   templateUrl: './realtime.component.html',
-  styleUrls: ['./realtime.component.scss']
+  styleUrls: ['./realtime.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RealtimeComponent implements OnInit {
 
@@ -18,6 +19,8 @@ export class RealtimeComponent implements OnInit {
   private response: RealtimeResponse;
 
   public messages: Message[] = [];
+  
+  public loading: boolean = false;
 
   constructor(private cygNet: CygNetApiService)
   {
@@ -45,10 +48,11 @@ export class RealtimeComponent implements OnInit {
       this.showError("You have not specified a domain, please do so.");
       return;
     }
-
+    this.loading = true;
     this.request.PointTags = this.points;
 
-    this.response = await this.cygNet.postGetRealtimeValues(this.request);
+    this.response = await this.cygNet.getRealtimeValues(this.request);
+    this.loading = false;
   }
 
   private showError(message: string) {

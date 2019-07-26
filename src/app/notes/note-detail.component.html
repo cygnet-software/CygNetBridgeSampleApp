@@ -1,0 +1,40 @@
+<p-growl [(value)]="growlMsgs" [sticky] = "false" [life] = "3000"></p-growl>
+<div style="width: 500;min-height: 500; align-self: center">
+    <div class="detail-cell">
+        <p class="detail-title">Summary : </p>
+        <p class="detailValue" [hidden] = "editForm">{{note?.summary}}</p>
+        <input  type="text" style="width: 100%; margin-bottom: 10px"  [(ngModel)]="noteSummary"  pInputText [hidden]="!editForm" />
+    </div>
+    <div class="detail-cell">
+        <p class="detail-title">Type : </p>
+        <p class="detailValue" [hidden] = "editForm">{{note?.type}}</p>
+        <p-dropdown   [styleClass]="'note-type-dropdown'" name="type" #type="ngModel"  [autoWidth]="false" [options]="noteType" placeholder="Select Note Type"
+            [(ngModel)]="selectedType" [showClear]="true" required [hidden]="!editForm" ></p-dropdown>
+        <button class="btn btn-primary" style="margin:0 0 11px 10px; padding: 3px" (click)="getNoteTypes()" [hidden]="!editForm">Get Types</button>
+        <i class="pi pi-spin pi-spinner detail-type-loading-spinner" [hidden]="!isLoadingTypes" style="font-size: 2em"></i>
+            
+    </div>
+    <div  class="detail-cell">
+        <p class="detail-title">Note Tag : </p>
+        <p class="detailValue">{{note?.noteTag}}</p>
+    </div>
+    
+    <div class="detail-cell">
+        <p class="detail-title">Start Date : </p>
+        <p class="detailValue"  [hidden] = "editForm">{{note?.start}}</p>
+        <p-calendar class="note-detail-calendar" [style]="{'margin-left':'0px'}" [inputStyle]="{'width': '100%','margin-bottom': '10px','height':'30px'}" [hidden]="!editForm" [(ngModel)]="noteStartDate" showTime="true" hourFormat="12" hideOnDateTimeSelect="true"></p-calendar>
+    </div>
+
+    <div class="detail-cell" [hidden] ="!note.end">
+        <p class="detail-title">End Date : </p>
+        <p class="detailValue" [hidden] = "editForm">{{note?.end}}</p>
+        <p-calendar class="note-detail-calendar" [style]="{'margin-left':'0px'}" [inputStyle]="{'width': '100%','margin-bottom': '10px','height':'30px'}" [hidden]="!editForm" [(ngModel)]="noteEndDate" showTime="true" hourFormat="12" hideOnDateTimeSelect="true"></p-calendar>
+    </div>
+
+    <div class="detail-cell">
+        <p class="detail-title">Body : </p>
+        <p class="detailValue" [hidden]="editForm" >{{note?.body}}</p>
+        <textarea  type="text" style="width: 100%;max-height: 300px;margin-bottom: 10px" [autoResize] = "true" [(ngModel)]="noteBody" [hidden]="!editForm" pInputTextarea></textarea>
+
+    </div>
+</div>

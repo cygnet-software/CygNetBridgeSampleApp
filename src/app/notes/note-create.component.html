@@ -1,0 +1,115 @@
+
+<div style="width: 500;min-height: 500; align-self: center" >
+    <p-growl [(value)]="growlMsgs" [sticky] = "false" [life] = "3000"></p-growl>
+    <p-messages [(value)]="msgs"></p-messages>
+    <span style="float: right;color: red">* Required fields</span>
+    <p-tabView>
+        
+        <p-tabPanel header="Details">
+            <div class="createNoteCell">
+                <label>Site service </label><span class="asterisk">*</span>
+                <input type="text" class="create-note-input" name="siteService" required  #siteService="ngModel"
+                 [ngClass]="{'invalid-field':siteService?.invalid && siteService?.touched}" [(ngModel)]="createNoteRequest.siteService"  pInputText/>
+                
+            </div>
+
+            <div class="createNoteCell">  
+                <label>Summary  </label><span class="asterisk">*</span>
+                <input  type="text" class="create-note-input" name="summary" required #summary="ngModel"
+                [ngClass]="{'invalid-field':summary?.invalid && summary?.touched}" [(ngModel)]="createNoteRequest.summary" pInputText/>
+            </div>
+
+            <div class="createNoteCell">
+                <label>Start Date </label><span class="asterisk">*</span>
+                <p-calendar class="calendar" name="start" #startDate="ngModel" [(ngModel)]="createNoteRequest.start"
+                 [inputStyleClass]="(startDate?.invalid && startDate?.touched)?'invalid-field':''"  
+                required showTime="true" hourFormat="12" hideOnDateTimeSelect="true"></p-calendar>
+            </div>
+        
+            <div class="createNoteCell">
+                <label>End Date </label>
+                <p-calendar class="calendar" [(ngModel)]="createNoteRequest.end" name="end" showTime="true" hourFormat="12" hideOnDateTimeSelect="true"></p-calendar>
+            </div>
+
+            <div class="createNoteCell">
+                <label>Note Type </label><span class="asterisk">*</span>
+                <p-dropdown   class="create-note-input" name="type" #type="ngModel" [autoWidth]="false" [styleClass]="(type?.invalid && type?.touched)?'create-note-type-dropdown invalid-field':'create-note-type-dropdown'" 
+                [options]="noteType" placeholder="Select Note Type"
+                 [(ngModel)]="createNoteRequest.type" [showClear]="true" required ></p-dropdown>
+                <button class="btn btn-primary" style="margin-left:10px;padding: 3px" (click)="getNoteTypes()">Get Types</button>
+                <i class="pi pi-spin pi-spinner type-loading-spinner" [hidden]="!isLoadingTypes" style="font-size: 2em"></i>
+            </div>
+
+            <div class="createNoteCell">
+                    <label>Body </label><span class="asterisk">*</span>
+                <textarea  type="text" name="body" #body="ngModel" style="width: 100%;max-height: 300px;margin-bottom: 10px" [ngClass]="{'invalid-field':body?.invalid && body?.touched}" [autoResize] = "true"   [(ngModel)]="createNoteRequest.body" required pInputTextarea></textarea>
+            </div>
+        </p-tabPanel>
+
+        <p-tabPanel header="Associations">
+            <p-scrollPanel [style]="{width: '100%', height: '450px'}">
+                <br/>
+                <p-card styleClass="tab-pcard"  title="Facility Tags">
+                    <input #facilityTag placeholder="Site.Service::Facility" pInputText type="text"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="addFacilityTag(facilityTag.value);facilityTag.value=''">Add Facility</button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="createNoteRequest.facilityAssociations = []">Clear</button>
+
+                    <p *ngFor="let ft of createNoteRequest.facilityAssociations">{{ft}}</p>
+                </p-card>
+                
+                <br/>
+                <p-card styleClass="tab-pcard"  title="Point Tags">
+                    <input #pointTag placeholder="Site.Service::Point.UDC" pInputText type="text"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="addPointTag(pointTag.value);pointTag.value=''">Add Point</button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="createNoteRequest.pointAssociations = []">Clear</button>
+                    <p *ngFor="let pt of createNoteRequest.pointAssociations">{{pt}}</p>
+                </p-card>
+                
+            </p-scrollPanel>
+        </p-tabPanel>
+
+        <p-tabPanel [style]="{'padding ': '0%'}" header="Attributes">
+            <p-scrollPanel [style]="{width: '100%', height: '410px'}">
+               <br/>
+                <p-card styleClass="tab-pcard"  title="Text Attributes">
+                    <input #textAttributes [style]="{'width': '50%'}" pInputText type="text" (keyup.enter)="addTextAttr(textAttributes.value);textAttributes.value=''"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="addTextAttr(textAttributes.value);textAttributes.value=''" >Add</button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="createNoteRequest.textAttributes = []">Clear</button>
+    
+                    <p *ngFor="let attr of createNoteRequest.textAttributes">{{attr}}</p>
+                </p-card>
+                <br/>
+                <p-card styleClass="tab-pcard"  title="Table Attributes">
+                    <input #tableAttributes [style]="{'width': '50%'}"  pInputText type="text" (keyup.enter)="addTableAttr(tableAttributes.value);tableAttributes.value=''"/>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="addTableAttr(tableAttributes.value);tableAttributes.value=''">Add</button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="createNoteRequest.tableAttributes = []">Clear</button>
+    
+                    <p *ngFor="let attr of createNoteRequest.tableAttributes">{{attr}}</p>
+                </p-card>
+                <br/>
+                <p-card styleClass="tab-pcard"  title="Yes/No Attributes">
+                    <p-dropdown  [style]="{'width': '50%'}"  [options]="yesNoAttrValues" [(ngModel)]="yesNoAttribute" [showClear]="true" ></p-dropdown>
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="addYesNoAttr(yesNoAttribute);">Add</button>
+                    &nbsp;&nbsp;
+                    <button class="btn btn-primary" (click)="createNoteRequest.yesNoAttributes = []">Clear</button>
+                    <p *ngFor="let attr of createNoteRequest.yesNoAttributes">{{attr ? 'Yes' :'No'}}</p>
+                </p-card>
+                
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            </p-scrollPanel>
+        </p-tabPanel>
+    </p-tabView>
+    
+</div>

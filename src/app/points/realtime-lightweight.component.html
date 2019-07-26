@@ -1,5 +1,5 @@
 <p-messages [(value)]="messages"></p-messages>
-
+<p-progressSpinner *ngIf="loading"></p-progressSpinner>
 <p-card>
   <label>Point Tag: </label>
   <input [(ngModel)]="pointTag" placeholder="Site.Service::Point.UDC" pInputTExt type="text" />

@@ -55,7 +55,7 @@ export class RelativeFacilityComponent implements OnInit {
       return;
     }
 
-    this.response = await this.cygNet.postGetRelativeFacility(this.facilityTag, this.request);
+    this.response = await this.cygNet.getRelativeFacility(this.facilityTag, this.request);
     this.refreshGrid();
   }
 

@@ -38,7 +38,7 @@ export class PointPropertyComponent implements OnInit {
     }
 
     this.inProgress = true;
-    this.pointPropertyResponse = await this.cygNet.postGetPointProperty(this.pointPropertyRequest);
+    this.pointPropertyResponse = await this.cygNet.getPointProperty(this.pointPropertyRequest);
     this.inProgress = false;
   }
 

@@ -1,3 +1,9 @@
 .ui-progressbar {
   width: 180px;
 }
+.ui-progress-spinner {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+  }

@@ -3,11 +3,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TabMenuModule } from 'primeng/tabmenu';
 import { MenuItem } from 'primeng/api';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { DropdownModule } from 'primeng/dropdown';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SidebarModule } from 'primeng/sidebar';
 import { MenuModule } from 'primeng/menu';
 import { ButtonModule } from 'primeng/button'
@@ -23,6 +23,12 @@ import { TreeModule } from 'primeng/tree';
 import { AccordionModule } from 'primeng/accordion';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { TabViewModule } from 'primeng/tabview';
+import { DialogModule } from 'primeng/dialog';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { GrowlModule } from 'primeng/growl';
+import {InputSwitchModule} from 'primeng/inputswitch';
 
 import { AppComponent } from './app.component';
 import { CygNetApiService } from './core/cygnet-api.service';
@@ -42,7 +48,18 @@ import { PointPropertyComponent } from './points/point-property.component';
 import { RealtimeLightweightComponent } from './points/realtime-lightweight.component';
 import { RelativeFacilityComponent } from './facilities/relative-facility.component';
 import { HistoryRollupComponent } from './points/history-rollup.component';
+import { TwoFactorComponent } from './two-factor/two-factor.component';
+import { BaseAlarmsComponent } from './alarms/base-alarms.component';
+import { BaseNoteComponent } from './notes/base-note.component';
+import { NoteDetailComponent } from './notes/note-detail.component';
+import { NoteCreateComponent } from './notes/note-create.component';
 
+import { from } from 'rxjs';
+import { DevicesDataGroupComponent } from './devices/devices-datagroup.component';
+import { DevicesSendTransactionComponent } from './devices/devices-send-transaction.component';
+import { DevicesPollDataGroupComponent } from './devices/devices-poll-datagroup.component';
+import { TransactionDetailComponent } from './devices/device-transaction-detail.component';
+import { DevicesCommandComponent } from './devices/devices-Command.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +79,16 @@ import { HistoryRollupComponent } from './points/history-rollup.component';
     RealtimeLightweightComponent,
     RelativeFacilityComponent,
     HistoryRollupComponent,
+    TwoFactorComponent,
+    BaseAlarmsComponent,
+    BaseNoteComponent,
+    NoteDetailComponent,
+    NoteCreateComponent,
+    DevicesDataGroupComponent,
+    DevicesSendTransactionComponent,
+    DevicesPollDataGroupComponent,
+    TransactionDetailComponent,
+    DevicesCommandComponent
   ],
   imports: [
     FormsModule,
@@ -86,6 +113,12 @@ import { HistoryRollupComponent } from './points/history-rollup.component';
     AccordionModule,
     ToolbarModule,
     ProgressSpinnerModule,
+    DialogModule,
+    InputTextareaModule,
+    TabViewModule,
+    ScrollPanelModule,
+    GrowlModule,
+    InputSwitchModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'services', component: BaseServiceComponent, pathMatch: 'full' },
@@ -98,7 +131,14 @@ import { HistoryRollupComponent } from './points/history-rollup.component';
       { path: 'points/realtimelightweight', component: RealtimeLightweightComponent, pathMatch: 'full' },
       { path: 'example', component: ExampleBaseComponent, pathMatch: 'full' },
       { path: 'facilities/relative', component: RelativeFacilityComponent, pathMatch: 'full' },
-      { path: 'points/history/rollup', component: HistoryRollupComponent, pathMatch: 'full' }
+      { path: 'points/history/rollup', component: HistoryRollupComponent, pathMatch: 'full' },
+      { path: 'two-factor', component: TwoFactorComponent, pathMatch: 'full' },
+      { path: 'alarms', component: BaseAlarmsComponent , pathMatch: 'full' },
+      { path: 'notes', component: BaseNoteComponent , pathMatch: 'full' },
+      { path: 'devices/datagroups', component: DevicesDataGroupComponent , pathMatch: 'full' },
+      { path: 'devices/sendTransaction', component: DevicesSendTransactionComponent , pathMatch: 'full' },
+      { path: 'devices/pollDataGroup', component: DevicesPollDataGroupComponent , pathMatch: 'full' },
+      { path: 'devices/command', component: DevicesCommandComponent , pathMatch: 'full' }
     ])
   ],
   providers: [CygNetApiService],

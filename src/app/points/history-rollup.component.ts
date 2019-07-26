@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { CygNetApiService } from '../core/cygnet-api.service';
 import { Message, SelectItem } from 'primeng/api';
 import { HistoryResponse } from '../models/history-response';
@@ -9,7 +9,8 @@ import { HistoryRollupResponse } from '../models/history-rollup-response';
 @Component({
   selector: 'app-history-rollup',
   templateUrl: './history-rollup.component.html',
-  styleUrls: ['./history-rollup.component.scss']
+  styleUrls: ['./history-rollup.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class HistoryRollupComponent implements OnInit {
 
@@ -41,7 +42,7 @@ export class HistoryRollupComponent implements OnInit {
 
   public rollupTypes: SelectItem[];
   public rollupType: HistoricalRollupType;
-
+  public loading: boolean = false;
   constructor(private cygNet: CygNetApiService) {
     //set default to match the rollupdropdown
     this.selectedInterval = HistoryRollupType.Minute;
@@ -109,7 +110,7 @@ export class HistoryRollupComponent implements OnInit {
       this.showError("You have not specified a domain, please do so.");
       return;
     }
-
+    this.loading = true;
     switch (this.selectedInterval) {
       case HistoryRollupType.Minute: {
         this.minuteRequest = new HistoryRollupMinuteRequest();
@@ -117,7 +118,7 @@ export class HistoryRollupComponent implements OnInit {
         this.minuteRequest.end = this.endDate.toISOString();
         this.minuteRequest.rollupType = this.rollupType;
         this.minuteRequest.minuteRollupInterval = this.minuteRollupInterval;
-        this.response = await this.cygNet.postGetHistoryRollupMinute(this.pointTag, this.minuteRequest);
+        this.response = await this.cygNet.getHistoryRollupMinute(this.pointTag, this.minuteRequest);
         break;
       }
       case HistoryRollupType.Hour: {
@@ -126,7 +127,7 @@ export class HistoryRollupComponent implements OnInit {
         this.hourRequest.end = this.endDate.toISOString();
         this.hourRequest.rollupType = this.rollupType;
         this.hourRequest.hourRollupInterval = this.hourRollupInterval;
-        this.response = await this.cygNet.postGetHistoryRollupHour(this.pointTag, this.hourRequest);
+        this.response = await this.cygNet.getHistoryRollupHour(this.pointTag, this.hourRequest);
         break;
       }
       case HistoryRollupType.Day: {
@@ -135,7 +136,7 @@ export class HistoryRollupComponent implements OnInit {
         this.dayRequest.end = this.endDate.toISOString();
         this.dayRequest.rollupType = this.rollupType;
         this.dayRequest.dayStartHour = this.dayStartHour;
-        this.response = await this.cygNet.postGetHistoryRollupDay(this.pointTag, this.dayRequest);
+        this.response = await this.cygNet.getHistoryRollupDay(this.pointTag, this.dayRequest);
         break;
       }
       default: {
@@ -145,6 +146,7 @@ export class HistoryRollupComponent implements OnInit {
 
     }
     this.updateChart(chart);
+    this.loading = false;
   }
 
   private updateChart(chart: UIChart) {

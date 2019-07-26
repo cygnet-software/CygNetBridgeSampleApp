@@ -1,5 +1,5 @@
 <p-messages [(value)]="messages"></p-messages>
-
+<p-progressSpinner *ngIf="loading"></p-progressSpinner>
 <p-card>
   <label>Rollup type: </label>
   <p-dropdown [options]="intervals" [(ngModel)]="selectedInterval"></p-dropdown>

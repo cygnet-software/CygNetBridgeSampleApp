@@ -1,5 +1,6 @@
 <div>
   <p-messages [(value)]="messages"></p-messages>
+  <p-progressSpinner *ngIf ="loading"></p-progressSpinner>
   <p-card>
     Directions:
     <br />
@@ -62,9 +63,8 @@
       <br />
     </p-card>
   </div>
-
-  <p-card>
-    <p-table [value]="response.tags">
+  <p-card  *ngIf="isPopulated">
+    <p-table [value]="response.tags" [loading]="loading">   
       <ng-template pTemplate="header">
         <tr>
           <th>Tags</th>

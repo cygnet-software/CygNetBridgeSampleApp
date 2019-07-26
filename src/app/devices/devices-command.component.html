@@ -1,0 +1,51 @@
+<div>
+        <p-messages [(value)]="errorMessages"></p-messages>
+        <p-progressSpinner *ngIf="loading "></p-progressSpinner>
+        <p-growl [(value)]="growlMsgs" [sticky] = "false" [life] = "3000"></p-growl>
+        <p-card title="Get Command Info">
+            <label class="input-label" >Facility Tag: </label>
+            <input  class="input-text-command" [(ngModel)]="facilityTag"  pInputText type="text" placeholder="CYGSITE.UIS::FACILITY_ID"/>
+            <br />
+    
+            <label class="input-label" >Command Name: </label>
+            <input class="input-text-command" [(ngModel)]="commandName"  pInputText type="text" placeholder="e.g. BasicPoll"/>
+            <br />
+            
+            <label class="input-label" >Get Details</label>
+            <p-inputSwitch [(ngModel)]="getDetails"></p-inputSwitch>
+            <br />
+            
+            <button class="btn btn-primary" style="margin-left: 10px" (click)="getCommandInfo();">Get Command Info</button> &nbsp;&nbsp; &nbsp;&nbsp;
+            
+        </p-card>
+<br/><br/>
+        <p-card title="Send Command">
+                <label class="input-label" >Facility Tag: </label>
+                <input class="input-text-command" [(ngModel)]="sendCommand_facilityTag"  pInputText type="text" placeholder="CYGSITE.UIS::FACILITY_ID"/>
+                <br />
+        
+                <label class="input-label" >Command: </label>
+                <input class="input-text-command" [(ngModel)]="sendCommand_command"  pInputText type="text" placeholder="BASICPOLL"/>
+                <br />
+                
+                <label class="input-label" >Parameters</label>
+                <input class="input-text-command" [(ngModel)]="sendCommand_parameters"  pInputText type="text" placeholder="Parm=True;"/>
+                <br />
+
+                <label class="input-label" >Status Point Id</label>
+                <input class="input-text-command" [(ngModel)]="sendCommand_statusPointId"  pInputText type="text" placeholder="CYGSITE.UIS::AUBREY_RD.SYCMDSTAT"/>
+                <br />
+                
+                <button class="btn btn-primary" style="margin-left: 10px" (click)="sendCommand();">Send Command </button> &nbsp;&nbsp; &nbsp;&nbsp;
+                
+            </p-card>
+        
+        <p-dialog [positionTop]="0" [header]="'Command Detail'" [(visible)]="showDetail" [width]="550" [minHeight]="auto"  [modal]="true">
+                <p-card title="Command Info">
+                        <div>{{commandInfoXml}}</div>
+                </p-card>
+            <p-footer>
+                <button pButton type="button" (click)="showDetail=false" label="Close" ></button>
+            </p-footer>
+        </p-dialog>
+    </div>

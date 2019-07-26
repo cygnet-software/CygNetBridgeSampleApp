@@ -1,5 +1,6 @@
 <div>
   <p-messages [(value)]="messages"></p-messages>
+  <p-progressSpinner *ngIf="loading"></p-progressSpinner>
   <p-card>
     <label>Group Service: </label>
     <input #siteService placeholder="SITE.GRP">

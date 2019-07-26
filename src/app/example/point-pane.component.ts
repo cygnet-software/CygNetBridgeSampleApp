@@ -41,13 +41,13 @@ export class PointPaneComponent implements OnInit, OnChanges {
 
   private async getPoints() {
     this.busy.emit(true);
-    let pointTagResponse = await this.cygNet.postGetPointTagsByFilter(this.pointTagFilterRequest);
+    let pointTagResponse = await this.cygNet.getPointTagsByFilter(this.pointTagFilterRequest);
     this.busy.emit(false);
     let points = pointTagResponse.tags;
 
     let realtimeRequest = new RealtimeRequest();
     realtimeRequest.PointTags = points;
-    this.realtimeResponse = await this.cygNet.postGetRealtimeValues(realtimeRequest);
+    this.realtimeResponse = await this.cygNet.getRealtimeValues(realtimeRequest);
     this.realtimeResponse.currentValues = this.reducePointTagFormat(this.realtimeResponse.currentValues);
   }
 

@@ -1,0 +1,88 @@
+<div>
+    <p-messages [(value)]="errorMessages"></p-messages>
+    <p-progressSpinner *ngIf="loading "></p-progressSpinner>
+    <p-growl [(value)]="growlMsgs" [sticky] = "false" [life] = "3000"></p-growl>
+    <p-card>
+        <label class="input-label" >Note Service: </label>
+        <input  [(ngModel)]="noteSiteService"  pInputText type="text" placeholder="SITE.NOTE"/>
+        <br />
+
+        <label class="input-label" >Start Date: </label>
+        <p-calendar [(ngModel)]="startDate" showTime="true" hourFormat="12" hideOnDateTimeSelect="true"></p-calendar>
+        <br />
+        
+        <label class="input-label" >End Date: </label>
+        <p-calendar [(ngModel)]="endDate" showTime="true" hourFormat="12" hideOnDateTimeSelect="true"></p-calendar>
+        <br />
+
+        <label class="input-label" >Note Type: </label>
+        <p-dropdown  [styleClass]="'base-note-type-dropdown'" [options]="noteTypeList" placeholder="Select Note Type" [(ngModel)]="noteType" [showClear]="true" ></p-dropdown>
+        <button class="btn btn-primary" style="margin-left:10px;padding: 3px" (click)="getNoteTypes()">Get Types</button>
+        <i class="pi pi-spin pi-spinner type-loading-spinner" [hidden]="!isLoadingTypes" style="font-size: 2em"></i>
+        
+
+        <div class="ui-g">
+            <p-card  [style]="{'width':'500px','margin':'10px 0 0 10px'}" title="Facility Tags">
+                <input #facilityTag placeholder="Site.Service::Facility" pInputText type="text" (keyup.enter)="addFacilityTag(facilityTag.value);facilityTag.value=''"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" (click)="addFacilityTag(facilityTag.value);facilityTag.value=''">Add Facility</button>
+                &nbsp;&nbsp;
+                <button class="btn btn-primary" (click)="facilityTags=[]">Clear</button>
+
+                <p *ngFor="let ft of facilityTags">{{ft}}</p>
+            </p-card>
+            <p-card  [style]="{'width':'500px','margin':'10px 0 0 10px'}" title="Point Tags">
+                <input #pointTag placeholder="Site.Service::Point.UDC" pInputText type="text" (keyup.enter)="addPointTag(pointTag.value);pointTag.value=''"/>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                <button class="btn btn-primary" (click)="addPointTag(pointTag.value);pointTag.value=''">Add Point</button>
+                &nbsp;&nbsp;
+                <button class="btn btn-primary" (click)="pointTags=[]">Clear</button>
+                <p *ngFor="let pt of pointTags">{{pt}}</p>
+            </p-card>
+        </div>    
+        <br />
+        <button class="btn btn-primary" style="margin-left: 10px" (click)="getNotes();">Get Notes</button> &nbsp;&nbsp; &nbsp;&nbsp;
+        <button class="btn btn-primary" (click)="showCreateNote = true;">Create Note</button>
+    </p-card>
+   
+    <p-card *ngIf="isPopulated">
+        <p-table #notesTable [value]="notes" [paginator]="true" [rows]="30" [alwaysShowPaginator]="false" selectionMode="single"   dataKey="tag" >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 50%">Summary</th>
+                    <th style="width: 25%">Start Date</th>
+                    <th style="width: 25%">End Date</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-note let-rowIndex="rowIndex">
+                <tr (click)="openDetails(rowIndex);">
+                    <td style = "word-wrap:break-word;">{{note.summary}}</td>
+                    <td>{{note.startTimestamp}}</td>
+                    <td>{{note.endTimestamp}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                Total {{notes?.length}} Notes
+            </ng-template>
+        </p-table>
+    </p-card>        
+
+    <p-dialog [positionTop]="0" [header]="'Note Detail'" [(visible)]="showDetail" [width]="500" [minHeight]="500"  [modal]="true" (onHide)="onDetailNoteHide()">
+
+        <note-detail #noteDetail [siteService]="noteSiteService" [noteFromParent] = "selectedNote" [edit]="edit"></note-detail>
+      
+        <p-footer>
+            <button pButton type="button" (click)="editNote(!edit)" [label]="editBtnText" ></button>
+            <button pButton type="button" (click)="submitEditedNote(noteDetail)" label="Submit" [disabled]="!edit"></button>
+        </p-footer>
+    </p-dialog>
+
+    <p-dialog resizable ="false" header="New Note" [(visible)]="showCreateNote" [width]="500" [minHeight]="500" [modal]="true">
+
+        <note-create #noteCreate></note-create>
+     
+        <p-footer> 
+          <button pButton type="button" (click)="createNote(noteCreate)" label="Submit" [disabled]="!noteCreate.validate()"></button>
+        </p-footer>
+    </p-dialog>
+</div>

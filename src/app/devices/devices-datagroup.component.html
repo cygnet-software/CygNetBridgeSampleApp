@@ -1,0 +1,54 @@
+<div>
+    <p-messages [(value)]="errorMessages"></p-messages>
+    <p-progressSpinner *ngIf="loading "></p-progressSpinner>
+    <p-growl [(value)]="growlMsgs" [sticky] = "false" [life] = "3000"></p-growl>
+    <p-card>
+        <label class="input-label" >Device Service: </label>
+        <input  [(ngModel)]="deviceSiteService"  pInputText type="text" placeholder="SITE.DDS"/>
+        <br />
+
+        <label class="input-label" >Device ID: </label>
+        <input  [(ngModel)]="deviceId"  pInputText type="text"/>
+        <br />
+        
+        <label class="input-label" >DataGroup Type: </label>
+        <input  [(ngModel)]="dataGroupType"  pInputText type="text"/>
+        <br />
+
+        <label class="input-label" >DataGroup Ordinal: </label>
+        <input  [(ngModel)]="dataGroupOrd"  pInputText type="text"/>
+        <br />
+
+        <label class="input-label" >Options: </label>
+        <p-dropdown  [styleClass]="'datagroup-options-dropdown'" [options]="dataGroupOptions" placeholder="Select Option" [(ngModel)]="dataGroupOption" [showClear]="true" ></p-dropdown>
+        <br />
+        <button class="btn btn-primary" style="margin-left: 10px" (click)="getTransactions();">Get Transactions</button> &nbsp;&nbsp; &nbsp;&nbsp;
+        <!-- <button class="btn btn-primary" (click)="showCreateNote = true;">Create Note</button> -->
+    </p-card>
+    <p-card *ngIf="isPopulated">
+        <p-table #transactionsTable [value]="dataGroupTransactions" [paginator]="true" [rows]="30" [alwaysShowPaginator]="false" selectionMode="single" dataKey="header.dataBaseKey" >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 50%">DB Key</th>
+                    <th style="width: 50%">Timestamp Date</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-transaction let-rowIndex="rowIndex">
+                <tr (click)="openTransactionDetails(rowIndex);">
+                    <td style = "word-wrap:break-word;">{{transaction.header.dataBaseKey}}</td>
+                    <td>{{transaction.header.timestamp}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="summary">
+                Total {{dataGroupTransactions?.length}} transactions
+            </ng-template>
+        </p-table>
+    </p-card>
+    
+    <p-dialog [positionTop]="0" [header]="'Transaction Detail'" [(visible)]="showDetail" [width]="550" [minHeight]="500"  [modal]="true">
+        <transaction-detail [transaction]="selectedTransaction"></transaction-detail>
+        <p-footer>
+            <button pButton type="button" (click)="showDetail=false" label="Close" ></button>
+        </p-footer>
+    </p-dialog>
+</div>

@@ -17,6 +17,7 @@ export class BaseGroupsComponent implements OnInit {
   public groupEntered: boolean = false;
 
   public messages: Message[] = [];
+  public loading: boolean = false;
 
   constructor(private cygNet: CygNetApiService) {
     this.lazyGroups = new Array<GroupTreeNode>();
@@ -34,11 +35,12 @@ export class BaseGroupsComponent implements OnInit {
       this.showError("You have not specified a domain, please do so.");
       return;
     }
-
+    this.loading =  true;
     this.siteService = siteService;
     let response = await this.cygNet.getGroupRoots(this.siteService);
     this.lazyGroups = this.translateGroupNodeList(response.nodes);
     this.groupEntered = true;
+    this.loading =  false;
   }
 
   public async groupNodeExpand(event) {
